@@ -24,11 +24,11 @@ const ALL_PHASES = [PHASES.INHALE, PHASES.HOLD_IN, PHASES.EXHALE, PHASES.HOLD_OU
 // Duration of the color crossfade in ms
 const COLOR_TRANSITION_MS = 600
 
-// Attempt 3: Stronger sigmoid easing with clear anticipation
-function easeInOutQuart(t) {
+// Gentle sigmoid easing - cubic for smoother feel
+function easeInOutCubic(t) {
   return t < 0.5
-    ? 8 * t * t * t * t
-    : 1 - Math.pow(-2 * t + 2, 4) / 2
+    ? 4 * t * t * t
+    : 1 - Math.pow(-2 * t + 2, 3) / 2
 }
 
 export function BreathCircle({ phase, progress, isRunning }) {
@@ -37,7 +37,7 @@ export function BreathCircle({ phase, progress, isRunning }) {
     if (!isRunning) return 0.6
 
     // Apply easing to progress for smooth acceleration/deceleration
-    const easedProgress = easeInOutQuart(progress)
+    const easedProgress = easeInOutCubic(progress)
 
     switch (phase) {
       case PHASES.INHALE:
